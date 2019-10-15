@@ -100,6 +100,10 @@ void Sim7x00CommDevice::run()
                 _waitForReply = NULL;
                 _replyState = okReply;
                 return;
+            } else if (_stateBooleans & DISCONNECT_PENDING) {
+                _replyState = okReply;
+                _waitForReply = NULL;
+                _sendState = sendNetclose;
             }
             break;
 
@@ -183,7 +187,7 @@ void Sim7x00CommDevice::run()
         _stateBooleans |= LINE_READ;
         _waitForReply = _okStr;
         _sendState = sendCgsockcont;
-        sendCommand("ATE0");
+        sendCommand("ATE1");
         break;
 
     case sendCgsockcont: {

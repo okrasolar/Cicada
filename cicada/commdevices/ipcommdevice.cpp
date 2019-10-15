@@ -53,6 +53,8 @@ bool IPCommDevice::connect()
 
 void IPCommDevice::disconnect()
 {
+    // Cancel the pending connection if there is one
+    _stateBooleans &= ~CONNECT_PENDING;
     _stateBooleans |= DISCONNECT_PENDING;
 }
 
